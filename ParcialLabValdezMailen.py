@@ -65,54 +65,70 @@ def MetodoNewton(DifFun,fun,x0,err,mit):
 #Ejercicio 3:
 
 def Ejercicio3(CalC,Funcion_Ej3,difF):
-    i=-2
-    hx=[]
-    hy=[]
-    #Parte a: Desarrollo de los valores para el gráfico
-    while i<=2:
-        hx.append(i)
-        fx=Funcion_Ej3(i)
-        hy.append(fx)
-        i=i+0.01
-    fig, ax = plt.subplots()
-    ax.plot(hx,hy)
-    plt.show()
+    band=False
+    while band==False:
+        print("Ingrese el inciso que desea ejecutar:")
+        print("1: Inciso a, gráfico.")
+        print("2: Inciso b: Raiz única positiva por método de bisección y metodo de Newton.")
+        print("3: Polinomio interpolante")
+        print("4:Salir")
+        v=int(input("Seleccione una opcion: "))
+        if v==1:
+            i=-2
+            hx=[]
+            hy=[]
+        #Parte a: Desarrollo de los valores para el gráfico
+            while i<=2:
+                hx.append(i)
+                fx=Funcion_Ej3(i)
+                hy.append(fx)
+                i=i+0.01
+            fig, ax = plt.subplots()
+            ax.plot(hx,hy)
+            plt.show()
     #Interpretando el gráfico entiendo que raices positivas de esta función hay una sola ya que la fúncion tiende a mas infinito en el intervalo [0,+infinito)
 
     #Parte b raices positivas
     #Como nos referimos a raices positivas, el intervalo puede estar determinado entre 0 y mas infinito, me doy cuenta que el intérvalo ideal es entre 0 y 1
 
-
+        elif v==2:
     #Con Bisección:
-    BisHx=[]
-    BisHy=[]
-    I=[0,1]
-    BisHx,BisHy = MetodoBiseccion(CalC,Funcion_Ej3,I,10**-7,100)
-    k=len(BisHx)-1
-    d=BisHx[k]
-    RaizBiseccion=d
-    print(f"la raiz proporcionada por el metodo de biseccion es {d}")
+            BisHx=[]
+            BisHy=[]
+            I=[0,1]
+            BisHx,BisHy = MetodoBiseccion(CalC,Funcion_Ej3,I,10**-7,100)
+            k=len(BisHx)-1
+            d=BisHx[k]
+            RaizBiseccion=d
+            print(f"la raiz proporcionada por el metodo de biseccion es {d}")
 
-    #Con Newton:
-    NewHx=[]
-    NewHy=[]
-    NewHx, NewHy= MetodoNewton(difF,Funcion_Ej3,1,10**-7,100)
-    g=len(NewHx)-1
-    h=NewHx[g]
-    RaizNewton=h
-    print(f"la raiz proporcionada por el metodo de newton es {h}")
+        #Con Newton:
+            NewHx=[]
+            NewHy=[]
+            NewHx, NewHy= MetodoNewton(difF,Funcion_Ej3,1,10**-7,100)
+            g=len(NewHx)-1
+            h=NewHx[g]
+            RaizNewton=h
+            print(f"la raiz proporcionada por el metodo de newton es {h}")
 
+        elif v==3:
     #Parte c: polinomio interpolante Metodo de Lagrange:
-    x=[-1,-0.5,0.2]
-    y=[Funcion_Ej3(-1),Funcion_Ej3(-0.5),Funcion_Ej3(0.2)]
+            x=[-1,-0.5,0,2]
+            y=[Funcion_Ej3(-1),Funcion_Ej3(-0.5),Funcion_Ej3(0),Funcion_Ej3(2)]
     
-    z = [-1 + (1*(l/100)) for l in range(201)]
-    w = ilag(x,y,z)
+            z = [-1 + (1*(l/100)) for l in range(401)]
+            w = ilag(x,y,z)
 
-    plt.plot(x,y,'o')
-    plt.plot(z,w,'.',label='polinomio interpolante')
-    plt.legend()
-    plt.show()
+            plt.plot(x,y,'o')
+            plt.plot(z,w,'.',label='polinomio interpolante')
+            plt.legend()
+            plt.show()
+    
+        elif v==4:
+            band=True
+            print("Saliendo")
+        else:
+            print("Por favor elija una opción disponible")
 
 #La funcion que determina el ejercicio 3
 def Funcion_Ej3(x):
@@ -151,12 +167,13 @@ def ilag(x, y, z):
 #Declaración del main a cargo de ejecutar el programa
 def main():
 
-    print("El siguiente programa ejecuta el punto 3:")
-    print("Presione 1, si desea ejecutarlo")
-    print("Presione 2 en caso de querer terminar el programa")
+    
     bandera=False
 
     while bandera==False:
+        print("El siguiente programa ejecuta el punto 3:")
+        print("Presione 1, si desea ejecutarlo")
+        print("Presione 2 en caso de querer terminar el programa")
         a=int(input("Ingrese el punto a ejecutar: "))
         if a==1:
             Ejercicio3(CalcularC,Funcion_Ej3,difF)
@@ -169,4 +186,3 @@ def main():
             bandera=False
 
 main()
- 
